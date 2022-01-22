@@ -28,4 +28,13 @@ describe('AuthenticateUser Service', () => {
     const error = sut.auth({ email, password });
     await expect(error).rejects.toThrow();
   });
+  it('Should return null if findUserRepository returns falsy', async () => {
+    const { sut, findUserRepositorySpy } = makeSut();
+    jest
+      .spyOn(findUserRepositorySpy, 'findByEmail')
+      .mockReturnValueOnce(Promise.resolve(null));
+    const { email, password } = mockAuthentication();
+    const result = await sut.auth({ email, password });
+    expect(result).toBeNull();
+  });
 });
