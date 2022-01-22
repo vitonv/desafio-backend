@@ -14,6 +14,10 @@ export default {
       name: 'Users',
       description: 'API relacionada aos usuários do sistema',
     },
+    {
+      name: 'Tools',
+      description: 'API relacionada as ferramentas cadastradas',
+    },
   ],
   paths,
   components,
