@@ -7,6 +7,11 @@ export class FindUserByTokenService implements FindByToken {
   ) {}
   async findByToken(token: string): Promise<FindByToken.Result> {
     const user = await this.findUserByTokenRepository.findByToken(token);
+    if (user) {
+      return {
+        id: user.id,
+      };
+    }
     return null;
   }
 }
