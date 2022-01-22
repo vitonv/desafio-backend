@@ -50,4 +50,21 @@ describe('', () => {
       expect(checkUserToken.token).toBe(token);
     });
   });
+  describe('findByToken()', () => {
+    const name = faker.name.findName();
+    const email = faker.internet.email();
+    const password = faker.internet.password();
+    const token = faker.datatype.uuid();
+    it('Should return the id an existing user ', async () => {
+      const { sut } = makeSut();
+      await MongoHelper.getCollection('users').insertOne({
+        name,
+        email,
+        password,
+        token,
+      });
+      const user = await sut.findByToken(token);
+      expect(user.id).toBeTruthy();
+    });
+  });
 });
