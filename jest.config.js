@@ -6,8 +6,8 @@ module.exports = {
     '!<rootDir>/src/main/**'
   ],
   coverageDirectory: 'coverage',
-  coverageProvider: 'babel',
   testEnvironment: 'node',
+  preset: 'ts-jest',
   moduleNameMapper: {
     '@/tests/(.*)': '<rootDir>/tests/$1',
     '@/(.*)': '<rootDir>/src/$1'
