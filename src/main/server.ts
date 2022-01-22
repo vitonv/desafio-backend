@@ -1,6 +1,7 @@
 import { MongoHelper } from '@/infra/db/mongodb/helpers';
+import 'dotenv/config';
 
-MongoHelper.connect('mongodb://localhost:2717')
+MongoHelper.connect(process.env.MONGO_URL)
   .then(async () => {
     const { app } = await import('./config/app');
     app.listen(3000, () =>
