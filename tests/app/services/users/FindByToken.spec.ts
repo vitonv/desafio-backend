@@ -27,4 +27,9 @@ describe('FindByToken Service', () => {
     const error = sut.findByToken('any_token');
     await expect(error).rejects.toThrow();
   });
+  it('Should return user id on success', async () => {
+    const { sut, findUserByTokenRepositorySpy } = makeSut();
+    const result = await sut.findByToken('any_token');
+    expect(result.id).toBe(findUserByTokenRepositorySpy.result.id);
+  });
 });
