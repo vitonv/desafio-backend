@@ -4,6 +4,7 @@ import faker from 'faker';
 import {
   FindUserRepository,
   CreateUserRepository,
+  UpdateAccessTokenRepository,
 } from '@/app/protocols/db/users';
 import { User } from '@/domain/entities/User';
 import { CreateUser } from '@/domain/useCases/users/CreateUser';
@@ -23,5 +24,17 @@ export class FindUserRepositorySpy implements FindUserRepository {
   async findByEmail(email: string): Promise<User> {
     this.result = mockFindUser(email);
     return this.result;
+  }
+}
+
+export class UpdateAccessTokenRepositorySpy
+  implements UpdateAccessTokenRepository
+{
+  id: string;
+  token: string;
+  async updateAccessToken(id: string, token: string): Promise<void> {
+    this.id = id;
+    this.token = token;
+    return null;
   }
 }

@@ -7,7 +7,9 @@ export class HashComparerSpy implements HashComparer {
 }
 
 export class EncrypterSpy implements Encrypter {
+  result: string;
   async encrypt(text: string): Promise<string> {
-    return Promise.resolve('any_token');
+    this.result = 'any_token';
+    return Promise.resolve(this.result);
   }
 }
