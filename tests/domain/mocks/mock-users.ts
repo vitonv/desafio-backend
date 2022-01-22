@@ -12,3 +12,8 @@ export const mockFindUser = (email: string) => ({
   email,
   password: faker.internet.password(),
 });
+
+export const mockAuthentication = () => ({
+  email: faker.internet.email(),
+  password: faker.internet.password(),
+});

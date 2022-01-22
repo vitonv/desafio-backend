@@ -1,8 +1,10 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import faker from 'faker';
 
-import { CreateUserRepository } from '@/app/protocols/db/users/CreateUserRepository';
-import { FindUsersRepository } from '@/app/protocols/db/users/FindUsersRepository';
+import {
+  FindUserRepository,
+  CreateUserRepository,
+} from '@/app/protocols/db/users';
 import { User } from '@/domain/entities/User';
 import { CreateUser } from '@/domain/useCases/users/CreateUser';
 import { mockFindUser } from '@/tests/domain/mocks';
@@ -16,7 +18,7 @@ export class CreateUserRepositorySpy implements CreateUserRepository {
   }
 }
 
-export class FindUserRepositorySpy implements FindUsersRepository {
+export class FindUserRepositorySpy implements FindUserRepository {
   result: User;
   async findByEmail(email: string): Promise<User> {
     this.result = mockFindUser(email);
