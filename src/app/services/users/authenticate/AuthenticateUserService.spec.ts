@@ -1,5 +1,8 @@
 import { FindUserRepositorySpy } from '@/tests/app/mocks';
-import { HashComparerSpy } from '@/tests/app/mocks/MockCryptography';
+import {
+  EncrypterSpy,
+  HashComparerSpy,
+} from '@/tests/app/mocks/MockCryptography';
 import { mockAuthentication } from '@/tests/domain/mocks';
 
 import { AuthenticateUserService } from '.';
@@ -7,14 +10,17 @@ import { AuthenticateUserService } from '.';
 const makeSut = () => {
   const findUserRepositorySpy = new FindUserRepositorySpy();
   const hashComparerSpy = new HashComparerSpy();
+  const encrypterSpy = new EncrypterSpy();
   const sut = new AuthenticateUserService(
     findUserRepositorySpy,
     hashComparerSpy,
+    encrypterSpy,
   );
   return {
     sut,
     findUserRepositorySpy,
     hashComparerSpy,
+    encrypterSpy,
   };
 };
 describe('AuthenticateUser Service', () => {
@@ -51,5 +57,12 @@ describe('AuthenticateUser Service', () => {
     const { email, password } = mockAuthentication();
     const result = await sut.auth({ email, password });
     expect(result).toBeNull();
+  });
+  it('Should call Encrypter with correct value', async () => {
+    const { sut, encrypterSpy, findUserRepositorySpy } = makeSut();
+    const encryptSpy = jest.spyOn(encrypterSpy, 'encrypt');
+    const { email, password } = mockAuthentication();
+    await sut.auth({ email, password });
+    expect(encryptSpy).toHaveBeenCalledWith(findUserRepositorySpy.result.id);
   });
 });
