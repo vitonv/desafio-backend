@@ -5,9 +5,11 @@ import {
   FindUserRepository,
   CreateUserRepository,
   UpdateAccessTokenRepository,
+  FindUserByTokenRepository,
 } from '@/app/protocols/db/users';
 import { User } from '@/domain/entities/User';
 import { CreateUser } from '@/domain/useCases/users/CreateUser';
+import { FindByToken } from '@/domain/useCases/users/FindByToken';
 import { mockFindUser } from '@/tests/domain/mocks';
 
 export class CreateUserRepositorySpy implements CreateUserRepository {
@@ -36,5 +38,16 @@ export class UpdateAccessTokenRepositorySpy
     this.id = id;
     this.token = token;
     return null;
+  }
+}
+
+export class FindUserByTokenRepositorySpy implements FindUserByTokenRepository {
+  token: string;
+  result = {
+    id: faker.datatype.uuid(),
+  };
+  async findByToken(token: string): Promise<FindByToken.Result> {
+    this.token = token;
+    return this.result;
   }
 }
