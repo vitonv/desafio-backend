@@ -9,6 +9,7 @@ export class CreateUserService implements CreateUser {
   ) {}
   async create(params: CreateUser.Params): Promise<boolean> {
     const user = await this.findUserRepository.findByEmail(params.email);
+    const created = await this.createUserRepository.create(params);
     return false;
   }
 }
