@@ -1,14 +1,20 @@
 import { FindUserRepositorySpy } from '@/tests/app/mocks';
+import { HashComparerSpy } from '@/tests/app/mocks/MockCryptography';
 import { mockAuthentication } from '@/tests/domain/mocks';
 
 import { AuthenticateUserService } from '.';
 
 const makeSut = () => {
   const findUserRepositorySpy = new FindUserRepositorySpy();
-  const sut = new AuthenticateUserService(findUserRepositorySpy);
+  const hashComparerSpy = new HashComparerSpy();
+  const sut = new AuthenticateUserService(
+    findUserRepositorySpy,
+    hashComparerSpy,
+  );
   return {
     sut,
     findUserRepositorySpy,
+    hashComparerSpy,
   };
 };
 describe('AuthenticateUser Service', () => {
@@ -33,6 +39,15 @@ describe('AuthenticateUser Service', () => {
     jest
       .spyOn(findUserRepositorySpy, 'findByEmail')
       .mockReturnValueOnce(Promise.resolve(null));
+    const { email, password } = mockAuthentication();
+    const result = await sut.auth({ email, password });
+    expect(result).toBeNull();
+  });
+  it('Should return null if password does not match', async () => {
+    const { sut, hashComparerSpy } = makeSut();
+    jest
+      .spyOn(hashComparerSpy, 'compare')
+      .mockReturnValueOnce(Promise.resolve(false));
     const { email, password } = mockAuthentication();
     const result = await sut.auth({ email, password });
     expect(result).toBeNull();
