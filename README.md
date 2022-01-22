@@ -36,6 +36,8 @@ Para funcionar a aplicação você devera criar um container docker do MongoDB o
 <p>Para isso iremos alterar uma informação no arquivo dotenv. Abaixo esta um exemplo de uma configuração de banco local
 </p>
 
+Link para o arquivo dotenv: [aqui](.env)
+
 ```
 MONGO_URL=mongodb://localhost:27017
 ```
@@ -46,7 +48,7 @@ Para startar a api digite o comando abaixo:
 yarn dev
 ```
 <br>
-**OBS: Caso você queira usar o próprio banco de dados pule a seção abaixo**
+
 
 >## Endpoints
 Para acessar informações em relação aos endpoints da API acesse página de documentação do Swagger através do link abaixo.
