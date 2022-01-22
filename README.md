@@ -22,7 +22,7 @@ Para conferir se a API esta rodando corretamente digite o comando abaixo
 ```
 Caso a api exiba no console uma mensagem "Server started at port 3000" então a API já esta pronta para ser consumida.
 <br>
-**Observação:** Caso você opte por essa estratégia, ao final dos testes leia a aba de [removendo dependências]()
+**Observação:** Caso você opte por essa estratégia, ao final dos testes leia a aba de [removendo dependências](#Removendo-dependencias)
 <br></br>
 ## Manual
 ### Instalando dependências
@@ -71,7 +71,7 @@ http://localhost:3000/api/docs
 * Tsconfig-paths
 
 
-## Removendo dependências (Docker)
+# Removendo dependências
 Caso você tenha optado pela estratégia de utilizar docker-compose é interessante derrubar o container e depois excluir a imagem apos o uso
 ### Derrubando instancia
 Para derrubar a instancia, abra o terminal na pasta do projeto e digite o comando abaixo:
@@ -85,5 +85,5 @@ docker image ls
 ```
 Após a lista ser exibida, verifique se existe uma imagem com o nome **backend-desafio**. Caso exista digite o comando abaixo para remover
 ```
-docker image rm unid-backend-desafio_app
+docker image rm desafio-backend
 ```
