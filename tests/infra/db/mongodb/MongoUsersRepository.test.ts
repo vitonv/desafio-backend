@@ -1,3 +1,5 @@
+import faker from 'faker';
+
 import { MongoHelper } from '@/infra/db/mongodb/helpers';
 import { MongoUsersRepository } from '@/infra/db/mongodb/repositories';
 import { mockCreateAccountParams } from '@/tests/domain/mocks';
@@ -21,6 +23,31 @@ describe('', () => {
       const newUser = mockCreateAccountParams();
       const created = await sut.create(newUser);
       expect(created).toBe(true);
+    });
+  });
+  describe('findByEmail()', () => {
+    it('Should return an existing user', async () => {
+      const { sut } = makeSut();
+      const newUser = mockCreateAccountParams();
+      await sut.create(newUser);
+      const findUser = await sut.findByEmail(newUser.email);
+      expect(findUser).toBeTruthy();
+      expect(findUser.id).toBeTruthy();
+      expect(findUser.name).toBe(newUser.name);
+      expect(findUser.email).toBe(newUser.email);
+    });
+  });
+  describe('updateAccessToken', () => {
+    it('Should update user accessToken on success', async () => {
+      const { sut } = makeSut();
+      const newUser = mockCreateAccountParams();
+      await sut.create(newUser);
+      const findUser = await sut.findByEmail(newUser.email);
+      expect(findUser.token).toBeFalsy();
+      const token = faker.datatype.uuid();
+      await sut.updateAccessToken(findUser.id, token);
+      const checkUserToken = await sut.findByEmail(findUser.email);
+      expect(checkUserToken.token).toBe(token);
     });
   });
 });
