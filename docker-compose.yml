@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  database:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    container_name: mongo-db
+    volumes:
+      - ./db/:/data/db
+    networks:
+      - mongo-compose-network
+  app:
+    build: .
+    container_name: backend
+    restart: always
+    ports: 
+      - 3000:3000
+      - 9229:9229 #debug
+    volumes: 
+      - .:/usr/app
+    links: 
+      - database
+    networks:
+      - mongo-compose-network
+networks: 
+    mongo-compose-network:
+      driver: bridge
