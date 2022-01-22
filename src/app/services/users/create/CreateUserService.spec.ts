@@ -1,7 +1,9 @@
-import { CreateUserService } from '@/app/services/users/CreateUserService';
+import { CreateUserService } from '@/app/services/users/create';
+import {
+  CreateUserRepositorySpy,
+  FindUserRepositorySpy,
+} from '@/tests/app/mocks';
 import { mockCreateAccountParams } from '@/tests/domain/mocks';
-
-import { CreateUserRepositorySpy, FindUserRepositorySpy } from '../mocks';
 
 const makeSut = () => {
   const createUserRepositorySpy = new CreateUserRepositorySpy();

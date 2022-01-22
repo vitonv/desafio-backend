@@ -7,8 +7,6 @@ import { User } from '@/domain/entities/User';
 import { CreateUser } from '@/domain/useCases/users/CreateUser';
 import { mockFindUser } from '@/tests/domain/mocks';
 
-// import { CreateUser } from '../../../src/domain/useCases/users/CreateUser';
-
 export class CreateUserRepositorySpy implements CreateUserRepository {
   params: CreateUser.Params;
   result = true;
