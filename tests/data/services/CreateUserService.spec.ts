@@ -32,9 +32,22 @@ describe('CreateUser Service', () => {
     await expect(error).rejects.toThrow();
   });
   it('Should call createUserRepository with correct values', async () => {
-    const { sut, createUserRepositorySpy } = makeSut();
+    const { sut, createUserRepositorySpy, findUserRepositorySpy } = makeSut();
     const createSpy = jest.spyOn(createUserRepositorySpy, 'create');
-    await sut.create(mockCreateAccountParams());
-    expect(createSpy).toHaveBeenCalledWith(createUserRepositorySpy.params);
+    jest
+      .spyOn(findUserRepositorySpy, 'findByEmail')
+      .mockReturnValueOnce(Promise.resolve(null));
+    const { name, email, password } = mockCreateAccountParams();
+    await sut.create({ name, email, password });
+    expect(createSpy).toHaveBeenCalledWith({ name, email, password });
+  });
+  it('Should return true on success', async () => {
+    const { sut, findUserRepositorySpy } = makeSut();
+    jest
+      .spyOn(findUserRepositorySpy, 'findByEmail')
+      .mockReturnValueOnce(Promise.resolve(null));
+    const { name, email, password } = mockCreateAccountParams();
+    const result = await sut.create({ name, email, password });
+    expect(result).toBe(true);
   });
 });
