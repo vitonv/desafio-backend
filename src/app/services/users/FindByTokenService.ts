@@ -10,7 +10,7 @@ export class FindUserByTokenService implements FindByToken {
   async findByToken(token: string): Promise<FindByToken.Result> {
     let isValid: string;
     try {
-      const isValid = await this.decrypter.decrypt(token);
+      isValid = await this.decrypter.decrypt(token);
     } catch (error) {
       return null;
     }
