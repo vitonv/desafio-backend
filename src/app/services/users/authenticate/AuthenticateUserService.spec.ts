@@ -65,4 +65,13 @@ describe('AuthenticateUser Service', () => {
     await sut.auth({ email, password });
     expect(encryptSpy).toHaveBeenCalledWith(findUserRepositorySpy.result.id);
   });
+  it('Should call Encrypter with correct value', async () => {
+    const { sut, encrypterSpy } = makeSut();
+    jest
+      .spyOn(encrypterSpy, 'encrypt')
+      .mockReturnValueOnce(Promise.reject(new Error()));
+    const { email, password } = mockAuthentication();
+    const error = sut.auth({ email, password });
+    expect(error).rejects.toThrow();
+  });
 });
