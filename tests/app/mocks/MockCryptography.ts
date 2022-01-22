@@ -4,6 +4,7 @@ import {
   Decrypter,
   Encrypter,
   HashComparer,
+  Hasher,
 } from '@/app/protocols/cryptography';
 
 export class HashComparerSpy implements HashComparer {
@@ -27,5 +28,13 @@ export class DecrypterSpy implements Decrypter {
   async decrypt(ciphertext: string): Promise<string> {
     this.ciphertext = ciphertext;
     return this.plaintext;
+  }
+}
+export class HasherSpy implements Hasher {
+  plaintext: string;
+  ciphertext = faker.internet.password();
+  async hash(plaintext: string): Promise<string> {
+    this.plaintext = plaintext;
+    return this.ciphertext;
   }
 }
