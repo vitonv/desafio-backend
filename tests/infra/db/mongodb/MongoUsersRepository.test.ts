@@ -12,7 +12,7 @@ const makeSut = () => {
 };
 describe('', () => {
   beforeAll(async () => {
-    await MongoHelper.connect('mongodb://localhost:2717');
+    await MongoHelper.connect(process.env.MONGO_URL);
   });
   afterAll(async () => {
     await MongoHelper.disconnect();
