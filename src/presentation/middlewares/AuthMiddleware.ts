@@ -9,9 +9,9 @@ export class AuthMiddleware implements Middleware {
   constructor(private readonly findUserByToken: FindByToken) {}
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const accessToken = httpRequest.headers?.token;
-      if (accessToken) {
-        const user = await this.findUserByToken.findByToken(accessToken);
+      const { token } = httpRequest.headers;
+      if (token) {
+        const user = await this.findUserByToken.findByToken(token);
         if (user) {
           return ok({
             userId: user.id,
