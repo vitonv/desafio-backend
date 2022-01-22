@@ -1,4 +1,7 @@
-import { FindUserRepositorySpy } from '@/tests/app/mocks';
+import {
+  FindUserRepositorySpy,
+  UpdateAccessTokenRepositorySpy,
+} from '@/tests/app/mocks';
 import {
   EncrypterSpy,
   HashComparerSpy,
@@ -11,16 +14,19 @@ const makeSut = () => {
   const findUserRepositorySpy = new FindUserRepositorySpy();
   const hashComparerSpy = new HashComparerSpy();
   const encrypterSpy = new EncrypterSpy();
+  const updateAccessTokenRepositorySpy = new UpdateAccessTokenRepositorySpy();
   const sut = new AuthenticateUserService(
     findUserRepositorySpy,
     hashComparerSpy,
     encrypterSpy,
+    updateAccessTokenRepositorySpy,
   );
   return {
     sut,
     findUserRepositorySpy,
     hashComparerSpy,
     encrypterSpy,
+    updateAccessTokenRepositorySpy,
   };
 };
 describe('AuthenticateUser Service', () => {
@@ -65,7 +71,7 @@ describe('AuthenticateUser Service', () => {
     await sut.auth({ email, password });
     expect(encryptSpy).toHaveBeenCalledWith(findUserRepositorySpy.result.id);
   });
-  it('Should call Encrypter with correct value', async () => {
+  it('Should throw if Encrypter throws', async () => {
     const { sut, encrypterSpy } = makeSut();
     jest
       .spyOn(encrypterSpy, 'encrypt')
@@ -73,5 +79,40 @@ describe('AuthenticateUser Service', () => {
     const { email, password } = mockAuthentication();
     const error = sut.auth({ email, password });
     expect(error).rejects.toThrow();
+  });
+  it('Should call updateAccessTokenRepositorySpy with correct values', async () => {
+    const {
+      sut,
+      encrypterSpy,
+      findUserRepositorySpy,
+      updateAccessTokenRepositorySpy,
+    } = makeSut();
+    const updateAccessTokenSpy = jest.spyOn(
+      updateAccessTokenRepositorySpy,
+      'updateAccessToken',
+    );
+    const { email, password } = mockAuthentication();
+    await sut.auth({ email, password });
+    expect(updateAccessTokenSpy).toHaveBeenCalledWith(
+      findUserRepositorySpy.result.id,
+      encrypterSpy.result,
+    );
+  });
+  it('Should throw if updateAccessTokenRepositorySpy throws', async () => {
+    const { sut, updateAccessTokenRepositorySpy } = makeSut();
+    jest
+      .spyOn(updateAccessTokenRepositorySpy, 'updateAccessToken')
+      .mockReturnValueOnce(Promise.reject(new Error()));
+    const { email, password } = mockAuthentication();
+    const error = sut.auth({ email, password });
+    expect(error).rejects.toThrow();
+  });
+  it('Should return user with accessToken on success', async () => {
+    const { sut, encrypterSpy, findUserRepositorySpy } = makeSut();
+    const { email, password } = mockAuthentication();
+    const { token, user } = await sut.auth({ email, password });
+    expect(token).toBe(encrypterSpy.result);
+    expect(user.id).toBe(findUserRepositorySpy.result.id);
+    expect(user.name).toBe(findUserRepositorySpy.result.name);
   });
 });
