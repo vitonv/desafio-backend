@@ -10,11 +10,7 @@ import { ListTools } from '@/domain/useCases/tools/ListTools';
 
 import { MongoHelper, QueryBuilder } from '../helpers';
 
-<<<<<<< HEAD
 export class MongoToolsRepository
-=======
-export class MongoToolssRepository
->>>>>>> aa5de6c38797bbc8878dda9292cf2f76ebc58403
   implements CreateToolRepository, DeleteToolRepository, ListToolsRepository
 {
   private repository: Collection;
