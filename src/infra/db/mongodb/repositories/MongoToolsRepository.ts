@@ -20,12 +20,13 @@ export class MongoToolsRepository
   async list(params?: ListTools.Params): Promise<ListTools.Result> {
     const query = new QueryBuilder();
     if (params) {
-      const { tag } = params;
-      query.match({
-        tags: {
-          $in: [tag],
-        },
-      });
+      if (params.tag) {
+        query.match({
+          tags: {
+            $in: [params.tag],
+          },
+        });
+      }
     }
     const tools = await this.repository.aggregate(query.build()).toArray();
     return MongoHelper.mapCollection(tools);

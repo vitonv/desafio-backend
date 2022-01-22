@@ -1,14 +1,11 @@
-import {
-  FindUserRepositorySpy,
-  UpdateAccessTokenRepositorySpy,
-} from '@/tests/app/mocks';
+import { AuthenticateUserService } from '@/app/services/users';
 import {
   EncrypterSpy,
+  FindUserRepositorySpy,
   HashComparerSpy,
-} from '@/tests/app/mocks/MockCryptography';
+  UpdateAccessTokenRepositorySpy,
+} from '@/tests/app/mocks';
 import { mockAuthentication } from '@/tests/domain/mocks';
-
-import { AuthenticateUserService } from '.';
 
 const makeSut = () => {
   const findUserRepositorySpy = new FindUserRepositorySpy();

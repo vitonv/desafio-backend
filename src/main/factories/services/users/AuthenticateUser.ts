@@ -1,4 +1,4 @@
-import { AuthenticateUserService } from '@/app/services/users/authenticate';
+import { AuthenticateUserService } from '@/app/services/users';
 import { BcryptAdapter, JwtAdapter } from '@/infra/cryptography';
 import { MongoUsersRepository } from '@/infra/db/mongodb/repositories';
 
