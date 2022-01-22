@@ -10,8 +10,10 @@ import { mockFindUser } from '@/tests/domain/mocks';
 // import { CreateUser } from '../../../src/domain/useCases/users/CreateUser';
 
 export class CreateUserRepositorySpy implements CreateUserRepository {
+  params: CreateUser.Params;
   result = true;
   async create(params: CreateUser.Params): Promise<boolean> {
+    this.params = params;
     return this.result;
   }
 }

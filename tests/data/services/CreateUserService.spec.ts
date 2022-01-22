@@ -19,6 +19,7 @@ const makeSut = () => {
 describe('CreateUser Service', () => {
   it('Should return false if findUserRepositorySpy returns a user', async () => {
     const { sut, findUserRepositorySpy } = makeSut();
+
     const result = await sut.create(mockCreateAccountParams());
     expect(result).toBe(false);
   });
@@ -29,5 +30,11 @@ describe('CreateUser Service', () => {
       .mockReturnValueOnce(Promise.reject(new Error()));
     const error = sut.create(mockCreateAccountParams());
     await expect(error).rejects.toThrow();
+  });
+  it('Should call createUserRepository with correct values', async () => {
+    const { sut, createUserRepositorySpy } = makeSut();
+    const createSpy = jest.spyOn(createUserRepositorySpy, 'create');
+    await sut.create(mockCreateAccountParams());
+    expect(createSpy).toHaveBeenCalledWith(createUserRepositorySpy.params);
   });
 });
