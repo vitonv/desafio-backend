@@ -23,28 +23,30 @@ Para conferir se a API esta rodando corretamente digite o comando abaixo
 Caso a api exiba no console uma mensagem "Server started at port 3000" então a API já esta pronta para ser consumida.
 <br>
 **Observação:** Caso você opte por essa estratégia, ao final dos testes leia a aba de [removendo dependências]()
+<br></br>
 ## Manual
 ### Instalando dependências
 ```
 yarn
 ```
-## Setando MongoDB
+### Setando MongoDB
 Para funcionar a aplicação você devera criar um container docker do MongoDB ou conectar a um banco já existente.
 <br>
+<p>Antes de startar a api é necessário colocar a referencia do link do banco de dados em relação a nossa aplicação.</p>
+<p>Para isso iremos alterar uma informação no arquivo dotenv. Abaixo esta um exemplo de uma configuração de banco local
+</p>
+
+```
+MONGO_URL=mongodb://localhost:27017
+```
+
+### **Startando a API**
+Para startar a api digite o comando abaixo:
+```
+yarn dev
+```
+<br>
 **OBS: Caso você queira usar o próprio banco de dados pule a seção abaixo**
-### Criando container do MongoDB
-
-Antes de criar um container MongoDB é interessante saber se existe algum serviço rodando na porta 27027.
-
-Caso não tenha nenhum serviço rodando na porta 27017 execute o comando abaixo:
-```
-docker run --name mongo-test -p 27017:27017 -d mongo:latest
-```
-Senão aonde estiver {porta} digite o valor referente a uma porta diferente:
-```
-docker run --name mongo-test -p {porta}:27017 -d mongo:latest
-```
-Lembrando que a porta padrão do MongoDB é sempre **27017**, então o segundo argumento do -p tem que ser esse valor. Depois da criação da instancia docker ou da configuração do seu banco local siga os próximos passos.
 
 >## Endpoints
 Para acessar informações em relação aos endpoints da API acesse página de documentação do Swagger através do link abaixo.
@@ -81,5 +83,5 @@ docker image ls
 ```
 Após a lista ser exibida, verifique se existe uma imagem com o nome **backend-desafio**. Caso exista digite o comando abaixo para remover
 ```
-docker image rm backend-desafio
+docker image rm unid-backend-desafio_app
 ```
