@@ -22,7 +22,7 @@ Para conferir se a API esta rodando corretamente digite o comando abaixo
 ```
 Caso a api exiba no console uma mensagem "Server started at port 3000" então a API já esta pronta para ser consumida.
 <br>
-**Observação:** Caso você opte por essa estratégia, ao final dos testes leia a aba de [removendo dependências](#Removendo-dependencias)
+**Observação:** Caso você opte por essa estratégia, ao final dos testes leia a aba de [removendo dependências](#removendo-dependências)
 <br></br>
 ## Manual
 ### Instalando dependências
@@ -85,5 +85,5 @@ docker image ls
 ```
 Após a lista ser exibida, verifique se existe uma imagem com o nome **backend-desafio**. Caso exista digite o comando abaixo para remover
 ```
-docker image rm desafio-backend
+docker image rm desafio-backend_app
 ```
